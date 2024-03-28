@@ -1,15 +1,19 @@
 package com.tumblr.jumblr;
 
-import com.tumblr.jumblr.request.RequestBuilder;
-import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.User;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.scribe.model.Token;
+
+import com.tumblr.jumblr.request.RequestBuilder;
+import com.tumblr.jumblr.responses.ResponseWrapper;
+import com.tumblr.jumblr.types.Blog;
+import com.tumblr.jumblr.types.BlogWithPosts;
+import com.tumblr.jumblr.types.Post;
+import com.tumblr.jumblr.types.User;
 
 /**
  * This is the base JumblrClient that is used to make requests to the Tumblr
@@ -186,6 +190,22 @@ public class JumblrClient {
             soptions.remove("type");
         }
         return requestBuilder.get(JumblrClient.blogPath(blogName, path), soptions).getPosts();
+    }
+
+    public BlogWithPosts blogInfoWithPosts(String blogName, Map<String, ?> options) {
+        if (options == null) {
+            options = Collections.emptyMap();
+        }
+        Map<String, Object> soptions = JumblrClient.safeOptionMap(options);
+        soptions.put("api_key", apiKey);
+
+        String path = "/posts";
+        if (soptions.containsKey("type")) {
+            path += "/" + soptions.get("type").toString();
+            soptions.remove("type");
+        }
+        ResponseWrapper rw = requestBuilder.get(JumblrClient.blogPath(blogName, path), soptions);
+        return new BlogWithPosts(rw.getBlog(), rw.getPosts());
     }
 
     public List<Post> blogPosts(String blogName) {

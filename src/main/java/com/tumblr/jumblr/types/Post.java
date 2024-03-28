@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
-import org.apache.commons.lang3.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This class is the base of all post types on Tumblr
@@ -35,6 +36,8 @@ public class Post extends Resource {
     private String slug;
     private Long reblogged_from_id;
     private String reblogged_from_name;
+    private Long reblogged_root_id;
+    private String reblogged_root_name;
     private Long note_count;
     private List<Note> notes;
 
@@ -199,11 +202,27 @@ public class Post extends Resource {
     }
 
     /**
+     * Get the ID of the post that this post reblogged
+     * @return the ID
+     */
+    public Long getRebloggedRootId() {
+        return reblogged_root_id;
+    }
+
+    /**
      * Get name of the blog that this post reblogged
      * @return the blog name for the post that this post reblogged
      */
     public String getRebloggedFromName() {
         return reblogged_from_name;
+    }
+
+    /**
+     * Get name of the blog that this post reblogged
+     * @return the blog name for the post that this post reblogged
+     */
+    public String getRebloggedRootName() {
+        return reblogged_root_name;
     }
 
     /**

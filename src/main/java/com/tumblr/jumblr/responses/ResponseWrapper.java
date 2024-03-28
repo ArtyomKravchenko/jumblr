@@ -10,6 +10,8 @@ import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.Resource;
 import com.tumblr.jumblr.types.User;
+
+import java.io.File;
 import java.util.List;
 
 public class ResponseWrapper {
@@ -97,6 +99,7 @@ public class ResponseWrapper {
     private Gson gsonParser() {
         return new GsonBuilder().
             registerTypeAdapter(Post.class, new PostDeserializer()).
+            registerTypeAdapter(File.class, new FileDeserializer()).
             create();
     }
 

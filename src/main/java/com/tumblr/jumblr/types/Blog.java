@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class represents an individual Tumbelog
+ * This is take from the jumblr package but the ask and ask_anon are now String instead of boolean. That's because sometimes
+ * we get "true"/"false" and also "1"/"0". It handle both cases
  * @author jc
  */
 public class Blog extends Resource {
@@ -14,7 +15,8 @@ public class Blog extends Resource {
     private String description;
     private int posts, likes, followers;
     private Long updated;
-    private boolean ask, ask_anon;
+    private String ask;
+    private String ask_anon;
 
     /**
      * Get the description of this blog
@@ -29,7 +31,7 @@ public class Blog extends Resource {
      * @return boolean
      */
     public boolean canAsk() {
-        return this.ask;
+        return this.ask!=null && (this.ask.equals("true") || this.ask.equals("1"));
     }
 
     /**
@@ -37,7 +39,7 @@ public class Blog extends Resource {
      * @return boolean
      */
     public boolean canAskAnonymously() {
-        return this.ask_anon;
+        return this.ask_anon!=null && (this.ask_anon.equals("true") || this.ask_anon.equals("1"));
     }
 
     /**
